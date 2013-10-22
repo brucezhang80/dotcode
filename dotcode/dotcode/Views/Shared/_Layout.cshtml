@@ -1,0 +1,59 @@
+﻿@using dotcode.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="@Url.Content("~/Styles/bootstrap/css/bootstrap.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Styles/dotcode.css")" rel="stylesheet" type="text/css" />
+
+        <script src="~/Script/jquery-1.10.1.min.js"></script>
+        <script src="~/Script/jquery-ui.min.js"></script>
+        <script src="~/Script/bootstrap.min.js"></script>
+        
+        @RenderSection("Styles", false)
+        @RenderSection("Scripts", false)
+
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+    </head>
+    <body>
+        <div id="navbar">
+            @{ Html.RenderPartial("~/Views/Shared/_NavigationBar.cshtml"); }
+        </div>
+
+        <div id="content-main">
+            @RenderBody()
+        </div>
+        
+        <div id="busy-loading"></div>
+
+        <div class="modal fade" style="display: none; padding-bottom: 10px;" id="login-modal">
+        </div>
+        <script>
+            function reloadNavBar() {
+                $.ajax({
+                    url: '@Url.Action("RenderNavBar", "Home")',
+                    data: { Id : window.clientModel ? window.clientModel.Id : null },
+                    success: function (response) {
+                        $("#navbar").html(response);
+                    }
+                });
+            }
+            
+            function onEnter(selector, callback) {
+                $(selector).on('keyup', function (e) {
+                    if (e.keyCode === 13) {
+                        callback();
+                    }
+                });
+            }
+
+            $(document)
+                .ajaxStart(function () { $("#busy-loading").attr("class", "loading"); })
+                .ajaxStop(function () { $("#busy-loading").attr("class", ""); });
+        </script>
+    </body>
+</html>

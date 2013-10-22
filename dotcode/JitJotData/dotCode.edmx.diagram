@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ecb43a327e1f4600bb6a9af85e7b982e" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="dotcodedbModel.AdminSetting" Width="1.5" PointX="6.865875193321088" PointY="9.4763391062041453" />
+        <EntityTypeShape EntityType="dotcodedbModel.Binary" Width="1.5" PointX="1.9988801823923739" PointY="15.094000435943716" />
+        <EntityTypeShape EntityType="dotcodedbModel.BinaryType" Width="1.5" PointX="10.706605178633055" PointY="20.209026450388613" />
+        <EntityTypeShape EntityType="dotcodedbModel.CodeUnitAutoId" Width="1.5" PointX="5.5584039155200138" PointY="27.693991375944574" />
+        <EntityTypeShape EntityType="dotcodedbModel.CodeUnitDllReference" Width="1.5" PointX="4.4502043446759707" PointY="30.486477508436181" />
+        <EntityTypeShape EntityType="dotcodedbModel.CodeUnit" Width="1.5" PointX="2.3140926204221755" PointY="6.7273925127123446" />
+        <EntityTypeShape EntityType="dotcodedbModel.CompilerOutput" Width="1.5" PointX="0.075514756178257411" PointY="30.431933864220944" />
+        <EntityTypeShape EntityType="dotcodedbModel.Language" Width="1.5" PointX="9.0180675094100025" PointY="22.016062329530744" />
+        <EntityTypeShape EntityType="dotcodedbModel.RunLog" Width="1.5" PointX="0.97756024495584914" PointY="8.2070664503644526" />
+        <EntityTypeShape EntityType="dotcodedbModel.RuntimeUserConfig" Width="1.5" PointX="4.0029724445207853" PointY="13.441064676940936" />
+        <EntityTypeShape EntityType="dotcodedbModel.sysdiagram" Width="1.5" PointX="4.1946518682849838" PointY="16.365469254723504" />
+        <EntityTypeShape EntityType="dotcodedbModel.User" Width="1.5" PointX="6.2232633429687763" PointY="4.8829487137882728" />
+        <EntityTypeShape EntityType="dotcodedbModel.webpages_Membership" Width="1.5" PointX="11.495530267942478" PointY="22.485238800982589" />
+        <EntityTypeShape EntityType="dotcodedbModel.webpages_OAuthMembership" Width="1.5" PointX="2.0943782898105581" PointY="5.9211325374995978" />
+        <EntityTypeShape EntityType="dotcodedbModel.webpages_Roles" Width="1.5" PointX="1.4826495840599061" PointY="10.415395026288644" />
+        <AssociationConnector Association="dotcodedbModel.FK_AdminSettings_CodeUnits" />
+        <AssociationConnector Association="dotcodedbModel.FK_CodeUnitDllReferences_Binaries" />
+        <AssociationConnector Association="dotcodedbModel.FK_CompilerOutput_DllReferences" />
+        <AssociationConnector Association="dotcodedbModel.FK_CodeUnits_CodeUnitAutoIds" />
+        <AssociationConnector Association="dotcodedbModel.FK_CodeUnitDllReferences_CodeUnits" />
+        <AssociationConnector Association="dotcodedbModel.FK_CodeUnits_Languages" />
+        <AssociationConnector Association="dotcodedbModel.FK_CodeUnits_Users" />
+        <AssociationConnector Association="dotcodedbModel.FK_CompilerOutput_CodeUnits" />
+        <AssociationConnector Association="dotcodedbModel.FK_RuntimeUserConfig_CodeUnits" />
+        <AssociationConnector Association="dotcodedbModel.webpages_UsersInRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+Default code auto-id:
+<form action="@Url.Action("SetDefaultProject", "AdminDashboard")" method="post" enctype="multipart/form-data">
+    <label for="file1">Code unit auto id:</label>
+    <input id="autoid" name="autoid" type="text"/>
+    <label for="file1">Language id:</label>
+    <input id="languageid" name="languageid" type="text"/>
+    <input type="submit" />
+</form>
+
+Upload system file:
+<form action="@Url.Action("UploadCommonReference", "AdminDashboard")" method="post" enctype="multipart/form-data">
+    <label for="file1">Filename:</label>
+    <input type="file" multiple="multiple" name="files" id="file1" />
+    <input type="submit"  />
+</form>
+
+<table>
+    @{
+        foreach (var reference in dotcode.Models.ReferenceModel.GetCommonReferences())
+        {
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>@reference.FileName</td>
+                <td>@reference.RuntimeVersion</td>
+                <td>
+                    <a href="@Url.Action("DeleteCommonReference", "AdminDashboard", new {id = reference.Id})"> delete </a>
+                </td>
+            </tr>
+        }
+     }
+</table>
+
+@section Scripts
+{
+    
+}

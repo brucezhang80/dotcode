@@ -1,0 +1,44 @@
+﻿<h2>login</h2>
+
+<label for="username">username</label>
+<input type="text" name="username" id="username" value="" />
+<label for="password">password</label>
+<input type="password" name="password" id="password" value="" />
+<a class="btn btn-primary" id="login-action">login</a>
+    
+<p>
+    <span id="login-error" class="error-message">@Model</span>
+</p>
+    
+<script>
+    $("#username").focus();
+    function login() {
+        $('#register-error').val('');
+        var username = $("#username").val();
+        var password = $("#password").val();
+        
+        $("input[type='password']").val('');
+
+        $.ajax({
+            url: '/api' + '@Url.Action("Login", "Account")',
+            type: "POST",
+            data: { username: username, password: password },
+            success: function(response) {
+                if (response.Success) {
+                    // On success, close dialog
+                    // Reload navigation bar.
+                    window.reloadNavBar();
+                    $('#login-modal').modal('hide');
+                } else {
+                    $("#login-error").text(response.Message);
+                }
+            }
+        });
+    }
+
+    $("#login-action").click(login);
+        
+    onEnter('#username', login);
+    onEnter('#password', login);
+
+</script>   

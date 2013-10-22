@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="72e4b5d71f95487cba669c92bac2a4b6" Name="Diagram1">
+        <EntityTypeShape EntityType="DotCodeDB.CompilerOutput" Width="1.5" PointX="11.696799253903702" PointY="12.912310397677269" />
+        <EntityTypeShape EntityType="DotCodeDB.DllReference" Width="1.5" PointX="6.5297232859440726" PointY="24.77821604571222" />
+        <AssociationConnector Association="DotCodeDB.FK_CompilerOutput_DllReferences" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

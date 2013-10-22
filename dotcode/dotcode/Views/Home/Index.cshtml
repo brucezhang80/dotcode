@@ -1,0 +1,385 @@
+﻿@using Newtonsoft.Json
+@using dotcode.Models
+@model ClientModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "jitjot";
+}
+
+<div id="code-editor-left">
+    @{Html.RenderPartial("~/Views/Editor/_CodeEditor.cshtml"); }
+</div>
+
+<div id="code-editor-right">
+    <div id="tab-container" class="tabbable">
+        <ul id="nav-tab" class="nav nav-tabs">
+            <li><a href="#tab1" data-toggle="tab">about</a></li>
+            <li><a href="#tab2" data-toggle="tab">settings</a></li>
+            <li class="active"><a href="#tab3" data-toggle="tab">test</a></li>
+            <li><a id="outputLink" href="#tab4" data-toggle="tab">output</a></li>
+        </ul>
+        <div class="tab-content" style="bottom: 0">
+            <div class="tab-pane" id="tab1">
+                @{ Html.RenderPartial("~/Views/Editor/_ProjectInfo.cshtml", Model.Id); }
+            </div>
+            <div class="tab-pane" id="tab2">
+                @{ Html.RenderAction("Main", "Reference", new { id = Model.Id }); }
+            </div>
+            <div class="tab-pane active" id="tab3" style="bottom: 0">
+                @{ Html.RenderPartial("~/Views/Editor/_RuntimeConfig.cshtml"); }
+            </div>
+            <div class="tab-pane" id="tab4">
+                <iframe id="sandboxiframe" class="console-container"></iframe>
+            </div>
+
+            <div id="compiler-output"></div>
+            <div style="bottom: 7px; position: fixed;">
+                @{
+                    var compileDisabledClass = ValidationModel.CanUserBuildOrRunCode(Model.Id) ? "" : "disabled";
+                    var runDisabledClass = ValidationModel.CanUserBuildOrRunCode(Model.Id) ? "" : "disabled";
+                }
+                <a class="btn btn-primary @compileDisabledClass" id="compileLink">build</a>
+                <a class="btn btn-primary @runDisabledClass" id="runLink">run</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="span5 navbar-fixed-bottom">
+    <div class="row-fluid">
+        <div class="span3">
+            <a href="https://twitter.com/share" class="twitter-share-button" style="display: none" data-url="https://jitjot.net" data-text="jitjot - write .NET code in your browser!" data-hashtags="jitjot">Tweet</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+        </div>
+        <div class="span3">
+            <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fjitjot.net&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 450px; height: 21px;" allowtransparency="true"></iframe>
+        </div>
+        <div class="span3">
+            <div class="g-plus" data-action="share" data-annotation="bubble" data-href="https://jitjot.net"></div>
+
+            <script type="text/javascript">
+                (function () {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/plusone.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+            </script>
+
+        </div>
+    </div>
+</div>
+
+<div id="tmp" style="display: none">@(JsonConvert.SerializeObject(Model, Formatting.Indented))</div>
+
+@section Scripts
+{
+    <script src="~/CodeMirror/codemirror.js"></script>
+    <script src="~/CodeMirror/clike/clike.js"></script>
+
+    <script type="text/javascript">
+        var clientModel = {};
+        var editor;
+
+        function getJsonObject(elementId) {
+            var tmp = document.getElementById(elementId);
+            var data = tmp.textContent;
+            tmp.parentNode.removeChild(tmp);
+            return JSON.parse(data);
+        }
+
+        function getClientModel() {
+            return window.clientModel;
+        }
+
+                function refreshUrl() {
+                    var url = unescape(generateUrl(false));
+                    $('#url-input').text(url + "RetVal");
+                }
+
+                function clone() {
+                    if ($(this).hasClass('disabled')) {
+                        return;
+                    }
+
+                    var sourceCode = editor.getValue();
+                    $.ajax({
+                        url: '@Url.Action("Clone")',
+                data: JSON.stringify({ id: '@Model.Id', source: sourceCode, references: clientModel.References }),
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                traditional: true,
+                success: function (response) {
+                    if (response != "") {
+                        window.location = '/@UrlMap.CodeUnitUrlPrefix/' + response;
+                        } else {
+                            alert('Clone failed');
+                        }
+                    }
+            });
+            }
+
+            function isJsonString(str) {
+                try {
+                    JSON.parse(str);
+                } catch (e) {
+                    return false;
+                }
+                return true;
+            }
+
+            function generateUrl(ui) {
+                var autoid = clientModel.AutoId;
+                var version = clientModel.VersionId;
+                var method = $('#method-input-dropdown').find(":selected").text();
+                var domain = (location.hostname != 'localhost' ? 'http://run.' : 'https://') + location.hostname + (location.port ? ':' + location.port : '');
+                var url = domain + (ui ? '/@UrlMap.RunUiUrlPrefix/' : '/@UrlMap.RunUrlPrefix/' + autoid + '/' + version + '/') + method + '/';
+
+            var jsonData = "[";
+            $('.method-arg-input').each(function () {
+                var val = $(this).val();
+                var type = $(this).data('arg-type');
+
+                if ((type === "String" || !isJsonString(val)) && val != "")
+                    val = '"' + val + '"';
+
+                jsonData += val + ", ";
+            });
+            jsonData = jsonData.replace(/[, ]+$/, "") + "]";
+
+            url += "?jsonArgs=" + encodeURIComponent(jsonData) + "&retattr=";
+            return url;
+        }
+
+        $(function () {
+            clientModel = getJsonObject('tmp');
+
+            editor = CodeMirror.fromTextArea(document.getElementById("src_initial"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                mode: "text/x-csharp",
+                indentUnit: 4,
+                tabIndex: 4,
+                indentWithTabs: true
+            });
+
+            editor.on("change", function (cm, change) {
+                clientModel.Source = editor.getValue();
+            });
+
+            document.getElementById('sandboxiframe').src = "http://run.jitjot.net" + '@Url.Action("ShowConsole")';
+
+            function save() {
+                if ($(this).hasClass('disabled')) {
+                    return;
+                }
+
+                var id = getClientModel().Id;
+                var code = getClientModel().Source;
+                var isPublic = $('#chk-project-visibility').is(':checked');
+                var description = $('#input-description').val();
+
+                var params = JSON.stringify({ Source: code, Id: id, IsPublic: isPublic, Description: description, references: clientModel.References });
+
+                $.ajax({
+                    data: params,
+                    url: '/api/@Url.Action("SaveCodeUnit", "Build")',
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        window.location = '/@UrlMap.CodeUnitUrlPrefix/' + response.AutoId + '/' + response.VersionId;
+                    }
+                });
+            }
+
+            function displayCompilerOutput(buildResults) {
+                $.ajax({
+                    async: false,
+                    url: '@Url.Action("FormatCompilerOutput")',
+                    data: JSON.stringify(buildResults),
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        $('#compiler-output').html(response);
+                    },
+                    error: function () {
+                        alert('There was an error formatting your compiler output');
+                    }
+                });
+            }
+
+            function compileCode(onSuccess) {
+                $('#compiler-output').html('');
+                $('#compiler-options').html('');
+
+                var id = clientModel.Id;
+                var code = editor.getValue();
+
+                var params = { Source: code, Id: id, references: clientModel.References };
+                $.ajax({
+                    url: '/api/build/compile',
+                    type: 'POST',
+                    data: JSON.stringify(params),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                        displayCompilerOutput(response.CompilerOutput);
+                        var success = !response.CompilerOutput.HasErrors;
+                        if (success && onSuccess != null) {
+                            onSuccess();
+                        }
+                    },
+
+                    error: function (err) {
+                        alert("Error compiling source\r\n" + err);
+                    }
+                });
+            }
+
+            function reloadMethods() {
+                $.ajax({
+                    url: '/api/build/methodreflect',
+                    type: 'POST',
+                    data: JSON.stringify(clientModel),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+
+                        function onChange() {
+                            var methodArgsList = $('#methodArgs');
+                            clientModel.MethodIndex = $(this).val();
+                            methodArgsList.empty();
+
+                            var idx = $(this).val();
+                            if (idx < 0) return;
+                            var p = $($('#method-input-dropdown > option')[idx]).data('params');
+                            $.each(p, function () {
+                                var name = this.ParameterName;
+                                var type = this.TypeName;
+                                var value = this.Value;
+
+                                var input = $('<input />');
+                                var argInput = input
+                                    .attr("class", "span2")
+                                    .attr("class", "method-arg-input")
+                                    .attr("type", "text")
+                                    .attr("placeholder", type)
+                                    .data('arg-type', type)
+                                    .data('arg-name', name)
+                                    .val(value);
+
+                                input.change(function () {
+                                    $.each(clientModel.Reflection, function () {
+                                        var option = $('#method-input-dropdown > option').eq(idx);
+                                        var tx = option.text();
+                                        if (this.MethodName == tx) {
+                                            $.each(this.Parameters, function () {
+                                                if (this.ParameterName == name) {
+                                                    this.Value = input.val();
+                                                }
+                                            });
+                                            option.data('params', this.Parameters);
+                                        }
+                                    });
+                                });
+
+                                input.on("keyup", function (x, y) {
+                                    refreshUrl();
+                                });
+
+                                methodArgsList.append(
+                                    $('<div></div>').attr("class", "input-prepend args-list-style")
+                                        .append($('<span></span>').attr("class", "add-on").text(name))
+                                        .append(argInput)
+                                );
+                            });
+
+                            refreshUrl();
+                        }
+
+                        var $subType = $("#method-input-dropdown");
+                        $subType.empty();
+
+                        var i = 0;
+                        $subType.change(onChange);
+
+                        $.each(response.Reflection, function () {
+                            var option = $('<option></option>').attr('class', "method-option");
+                            option.data('params', this.Parameters);
+                            $subType.append(option.attr("value", i).text(this.MethodName));
+                            i++;
+                        });
+
+                        if (response.MethodIndex != 0) {
+                            $subType.val(response.MethodIndex);
+                        }
+
+                        $subType.change();
+                    },
+
+                    error: function () {
+                    }
+                });
+            }
+
+            function runCode() {
+                $("#outputLink").tab('show');
+                var url = generateUrl(true);
+                $('#console').html("");
+                $('#console2').html("");
+
+                document.getElementById('sandboxiframe')
+                    .contentWindow
+                    .postMessage({ url: url, clientModel: clientModel }, "*");
+            }
+
+            $('#runLink').click(function () {
+                if ($(this).hasClass('disabled')) {
+                    return false;
+                }
+
+                runCode();
+                refreshUrl();
+                return false;
+            });
+
+            reloadMethods();
+
+            $('#reload-method-input').click(reloadMethods);
+
+            $('#compileLink').on('click', function () {
+                if ($(this).hasClass('disabled')) {
+                    return false;
+                }
+
+                compileCode(reloadMethods);
+                return false;
+            });
+
+            $('#nav-tab').tab();
+
+
+            $('#chk-project-visibility').change(function () {
+                if ($(this).hasClass('disabled')) {
+                    return;
+                }
+                var checked = $(this).is(':checked');
+                getClientModel().IsPublic = checked;
+                
+                $.ajax({
+                    url: '@Url.Action("EditProjectInfo")',
+                    data: JSON.stringify({ id: clientModel.Id, IsPublic: checked }),
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (response) {
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/Styles/footermenu.css" />
+    <link rel="stylesheet" href="~/CodeMirror/codemirror.css">
+    <link rel="stylesheet" href="~/Styles/css/font-awesome.min.css">
+}

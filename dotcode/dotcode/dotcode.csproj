@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B8DE9E1F-750A-4F98-9B1F-3CB35FEC5E48}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>dotcode</RootNamespace>
+    <AssemblyName>dotcode</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="dotcodedbEntities-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=WIN-MS27U1TCB99\SQLEXPRESS%3bInitial Catalog=dotcodedb%3bIntegrated Security=True%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\dotcodedbEntities-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.0.13117\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.0.13117\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.3.0.13117\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.3.0.13117\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.1.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\WebMatrixFix.cs" />
+    <Compile Include="Code\DomainData.cs" />
+    <Compile Include="Code\DomainRoute.cs" />
+    <Compile Include="Code\LinkExtensions.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Admin\AdminDashboardController.cs" />
+    <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Mailers\IUserMailer.cs" />
+    <Compile Include="Mailers\UserMailer.cs" />
+    <Compile Include="Models\BuildModel.cs" />
+    <Compile Include="Controllers\JsonDotNetController.cs" />
+    <Compile Include="Controllers\ReferenceController.cs" />
+    <Compile Include="Controllers\SandboxController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\dotCodeExtensions.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthenticationResponse.cs" />
+    <Compile Include="Models\AuthModel.cs" />
+    <Compile Include="Models\CompilerInput.cs" />
+    <Compile Include="Models\DbModel.cs" />
+    <Compile Include="Models\GlobalSettings.cs" />
+    <Compile Include="Models\PasswordResetModel.cs" />
+    <Compile Include="Models\ReferenceModel.cs" />
+    <Compile Include="Models\SandboxModel.cs" />
+    <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\UrlMap.cs" />
+    <Compile Include="Models\ValidationModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CompilerService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="CodeMirror\codemirror.css" />
+    <Content Include="CodeMirror\codemirror.js" />
+    <Content Include="CodeMirror\csharp\csharpcolors.css" />
+    <Content Include="CodeMirror\csharp\parsecsharp.js" />
+    <Content Include="CodeMirror\csharp\tokenizecsharp.js" />
+    <Content Include="CodeMirror\util\closetag.js" />
+    <Content Include="CodeMirror\util\colorize.js" />
+    <Content Include="CodeMirror\util\continuecomment.js" />
+    <Content Include="CodeMirror\util\continuelist.js" />
+    <Content Include="CodeMirror\util\dialog.css" />
+    <Content Include="CodeMirror\util\dialog.js" />
+    <Content Include="CodeMirror\util\foldcode.js" />
+    <Content Include="CodeMirror\util\formatting.js" />
+    <Content Include="CodeMirror\util\javascript-hint.js" />
+    <Content Include="CodeMirror\util\loadmode.js" />
+    <Content Include="CodeMirror\util\match-highlighter.js" />
+    <Content Include="CodeMirror\util\matchbrackets.js" />
+    <Content Include="CodeMirror\util\multiplex.js" />
+    <Content Include="CodeMirror\util\overlay.js" />
+    <Content Include="CodeMirror\util\pig-hint.js" />
+    <Content Include="CodeMirror\util\runmode-standalone.js" />
+    <Content Include="CodeMirror\util\runmode.js" />
+    <Content Include="CodeMirror\util\search.js" />
+    <Content Include="CodeMirror\util\searchcursor.js" />
+    <Content Include="CodeMirror\util\simple-hint.css" />
+    <Content Include="CodeMirror\util\simple-hint.js" />
+    <Content Include="CodeMirror\util\xml-hint.js" />
+    <Content Include="CodeMirror\clike\clike.js" />
+    <Content Include="CodeMirror\clike\index.html" />
+    <Content Include="CodeMirror\clike\scala.html" />
+    <Content Include="Global.asax" />
+    <Content Include="img\loading.gif" />
+    <Content Include="img\progressbar.gif" />
+    <Content Include="Script\jquery-1.10.1.min.js" />
+    <Content Include="Properties\DataSources\dotcode.lib.common.Compiler.CompilerOutput.datasource" />
+    <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\dcdev.pubxml" />
+    <Content Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Content>
+    <None Include="Service References\CompilerService\CompilerService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService1.wsdl" />
+    <None Include="Service References\CompilerService\CompilerService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService61.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService62.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService63.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService64.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\CompilerService65.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CompilerService\configuration91.svcinfo" />
+    <None Include="Service References\CompilerService\configuration.svcinfo" />
+    <None Include="Service References\CompilerService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Script\jquery-ui.min.js" />
+    <None Include="Service References\CompilerService\CompilerService1.disco" />
+    <Content Include="Styles\bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Styles\bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Styles\bootstrap\css\bootstrap.css" />
+    <Content Include="Styles\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Styles\bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Styles\bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Script\bootstrap.min.js" />
+    <Content Include="Styles\css\font-awesome-ie7.min.css" />
+    <Content Include="Styles\css\font-awesome.min.css" />
+    <Content Include="Styles\dotcode.css" />
+    <Content Include="Styles\footermenu.css" />
+    <Content Include="Styles\images\animated-overlay.gif" />
+    <Content Include="Styles\images\ui-bg_diagonals-thick_15_0b3e6f_40x40.png" />
+    <Content Include="Styles\images\ui-bg_dots-medium_30_0b58a2_4x4.png" />
+    <Content Include="Styles\images\ui-bg_dots-small_20_333333_2x2.png" />
+    <Content Include="Styles\images\ui-bg_dots-small_30_a32d00_2x2.png" />
+    <Content Include="Styles\images\ui-bg_dots-small_40_00498f_2x2.png" />
+    <Content Include="Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Styles\images\ui-bg_flat_40_292929_40x100.png" />
+    <Content Include="Styles\images\ui-bg_gloss-wave_20_111111_500x100.png" />
+    <Content Include="Styles\images\ui-icons_00498f_256x240.png" />
+    <Content Include="Styles\images\ui-icons_98d2fb_256x240.png" />
+    <Content Include="Styles\images\ui-icons_9ccdfc_256x240.png" />
+    <Content Include="Styles\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Styles\jquery-ui-1.10.2.custom.css" />
+    <Content Include="Styles\jquery.mCustomScrollbar.css" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Partial\_CompilerPartial.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Reference\Main.cshtml" />
+    <Content Include="Views\Reference\Popup.cshtml" />
+    <Content Include="Views\Reference\List.cshtml" />
+    <Content Include="Views\Reference\_CustomReferencePartial.cshtml" />
+    <Content Include="Views\Editor\_ProjectInfo.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Editor\_CodeEditor.cshtml" />
+    <Content Include="Views\Editor\_RuntimeConfig.cshtml" />
+    <Content Include="Views\Home\Help.cshtml" />
+    <Content Include="Views\Account\_Login.cshtml" />
+    <Content Include="Views\Account\_Register.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\PermissionDenied.cshtml" />
+    <Content Include="Views\Account\_AuthPanel.cshtml" />
+    <Content Include="Views\Account\UserDetails.cshtml" />
+    <Content Include="Views\Editor\_Console.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\UserMailer\Welcome.cshtml" />
+    <Content Include="Views\UserMailer\PasswordReset.cshtml" />
+    <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_NavigationBar.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sandbox\Sandbox.NET\Sandbox.NET.csproj">
+      <Project>{D2968514-A718-446A-846A-BB06761EFC4E}</Project>
+      <Name>Sandbox.NET</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sandbox\Shared\Shared.csproj">
+      <Project>{BC2E7DAB-ECAD-41CB-97AD-1192DA0F1E8E}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dotcode.lib.common\dotcode.lib.common.csproj">
+      <Project>{65A20DFF-E4CD-4B94-8766-5DCBE76B8B96}</Project>
+      <Name>dotcode.lib.common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JitJotData\JitJotData.csproj">
+      <Project>{32f6143b-8969-43cc-bcbd-84d746d5bbb1}</Project>
+      <Name>JitJotData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mirrors\Mirrors.csproj">
+      <Project>{CD9EA7DC-5D6F-4DF1-96EA-15AFE0CE5FA0}</Project>
+      <Name>Mirrors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CompilerService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49494</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44300/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

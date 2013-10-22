@@ -1,0 +1,42 @@
+﻿@{
+	ViewBag.Title = "Help";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+		</div>
+		<div class="span6">
+			<h3>help</h3>
+			<h4>calling methods</h4>
+			<p>
+				in order for a method to be exposed and visible by jitjot, it must have both
+				a public and static attribute.
+			</p>
+			<h4>passing arguments to code</h4>
+			<p>After creating a method visible to jitjot and building the code at least once,
+				it will show up in the method/args dropdown.  Selecting a method will show a list of
+				arguments below it, if any, that you can type values in which will be passed to your code.
+				Arguments must be passed in JSON format.
+				<br/>
+			    <br/>
+                <p>
+			    <b>Simple types (int, decimal, string, etc.)</b>
+			    <pre>no special formatting required; strings <b>do not</b> need to be quoted.</pre>
+			    <b>Arrays (int[ ], string[ ], etc.)</b>
+			    <pre>[1,2,3,4, "429496729600000"]
+["a", "bcd", "e"]</pre>
+			    <b>Complex types (classes)</b>
+                    <pre>{ FirstName : "Bob", Age: 30 }</pre>
+                    </p>
+			</p>
+		</div>
+		<div class="span3">
+		</div>
+	</div>
+</div>
+
+
+@section Scripts
+{}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="39a78943-4ce1-4414-a19a-c71c80ddb31f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:49193/RemoteSandbox.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RemoteSandbox.xsd" MetadataType="Schema" ID="80dd19d0-de96-463e-864a-188a9623dcc3" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?xsd=xsd2" />
+    <MetadataFile FileName="RemoteSandbox1.xsd" MetadataType="Schema" ID="0caa8fdf-92d9-4e89-a0ab-b0fee2640403" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?xsd=xsd3" />
+    <MetadataFile FileName="RemoteSandbox2.xsd" MetadataType="Schema" ID="567df9f1-85a4-4ee8-b897-03e2707787b1" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?xsd=xsd0" />
+    <MetadataFile FileName="RemoteSandbox3.xsd" MetadataType="Schema" ID="c9863d56-77c2-415f-b658-3f5d4431999f" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?xsd=xsd1" />
+    <MetadataFile FileName="Service1.wsdl" MetadataType="Wsdl" ID="164f4928-2224-4d0e-9ed8-7f7e9019342b" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?wsdl" />
+    <MetadataFile FileName="RemoteSandbox.disco" MetadataType="Disco" ID="59f2c10d-8145-4603-99e6-380c1f08d2e2" SourceId="1" SourceUrl="http://localhost:49193/RemoteSandbox.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

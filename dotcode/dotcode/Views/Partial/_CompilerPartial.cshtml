@@ -1,0 +1,61 @@
+﻿@model dotcode.lib.common.Compiler.CompilerOutputSummary
+
+@{
+    if (Model == null)
+    {
+        <div></div>
+    }
+
+    else
+    {
+        if (Model.HasErrors == false)
+        {
+            <div style="font-weight: bold;">Build successful. @Model.TimeStamp</div>
+        }
+
+        if (Model.CompilerErrors != null && Model.CompilerErrors.Any())
+        {
+            <div style="font-weight: bold;">
+                @{
+                    var errorCount = Model.CompilerErrors.Count(e => !e.IsWarning);
+                    var warningCount = Model.CompilerErrors.Count(e => e.IsWarning);
+                    
+                    if (errorCount > 0)
+                    {
+                        @:Build Failed.
+                        <div><i class="icon-remove-circle" style="color: red;"></i> @String.Format("{0} error{1}", errorCount, errorCount > 1 ? "s" : "")</div>
+                    }
+                
+                    if (warningCount > 0)
+                    {
+                        <div><i class="icon-warning-sign" style="color: gold;"></i> @String.Format("{0} warning{1}", warningCount, warningCount > 1 ? "s" : "")</div>
+                    }
+                }
+                
+            </div>
+            <table class="table table-hover compiler-table">
+                <tbody>
+                    @foreach (var error in Model.CompilerErrors)
+                    {
+                        <tr class="@(error.IsWarning ? "warning" : "error")">
+                            <td style="background: whitesmoke; font-size: 16px; text-align: center">
+                                @if (!error.IsWarning)
+                                {
+                                    <i class="icon-remove-circle" style="color: red;"></i>
+                                }
+
+                                else
+                                {
+                                    <i class="icon-warning-sign" style="color: gold;"></i>
+                                }
+
+                            </td>
+                            <td>[@error.ErrorCode] @error.Line:@error.Column</td>
+                            <td> - @error.ErrorMessage</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+}

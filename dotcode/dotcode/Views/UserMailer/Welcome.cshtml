@@ -1,0 +1,9 @@
+@using Mvc.Mailer
+Thank you for your interest in our site!<br/>
+To activate your account, click or paste the following link in your browser<br/>
+<br/>
+
+@{
+    string url = UrlHelperExtensions.Abs(Url, "/activate/" + ViewBag.UserName + "/" + ViewBag.Token);
+}
+<a href='@url'>active my account</a> or @url

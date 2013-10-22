@@ -1,0 +1,60 @@
+﻿@using dotcode.Models
+<style type="text/css">
+    .social-bar {
+        top: 10px;
+        position: relative;
+    }
+
+    .social-bar div {
+        min-height: 0px !important;
+    }
+</style>
+<div id="main-header" class="navbar navbar-fixed-top">
+    <div style="background: black !important; padding-left: 10px" class="navbar-inner">
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span4">
+                    <a href="~/" style="color: white !important; text-decoration: none; font-size: 25px;" class="brand">jitjot <span style="font-size: small; color: #606060; vertical-align: top;"> [alpha]</span></a>
+                </div>
+                
+                <div class="span4">
+                    @if (Model is ClientModel)
+                    {
+                        <div id="code-hover-menu" style="top: 5px; position: relative">
+                        
+                            @{
+                                var newDisabledClass = ValidationModel.CanUseCreateNewProject() ? "" : "disabled";
+                                var cloneDisabledClass = ValidationModel.CanUserCloneProject(Model.Id) ? "" : "disabled";
+                                var saveDisabledClass = ValidationModel.CanUserEditOrSaveProject(Model.Id) ? "" : "disabled";
+                            }
+                        
+                            <a class="btn btn-success @newDisabledClass" id="newLink">new</a>
+                            <a class="btn btn-success @cloneDisabledClass" id="cloneLink">clone</a>
+                            <a class="btn btn-success @saveDisabledClass" id="saveLink">save</a>
+                        </div>
+                    }
+                </div>
+                <div class="span4">
+                    <ul class="nav" style="float: right;">
+                        <li id="authpanel" class="header-nav">@{ Html.RenderPartial("~/Views/Account/_AuthPanel.cshtml"); }</li>
+                        <li><a href="@Url.Action("About", "Home")" class="header-nav">about</a></li>
+                        <li><a href="@Url.Action("Help", "Home")" class="header-nav">help</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('#cloneLink').click(window.clone);
+        $('#saveLink').click(window.save);
+        $('#newLink').click(function() {
+            if ($(this).hasClass('disabled')) {
+                return;
+            } else {
+                window.location = "/new";
+            }
+        });
+    });
+</script>

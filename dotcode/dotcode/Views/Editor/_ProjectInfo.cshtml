@@ -1,0 +1,62 @@
+﻿@using JitJotData
+@using dotcode.Models
+@model Guid
+
+@{
+    var dotCodeDb = new dotcodedbEntities();
+    var dbCodeUnit = dotCodeDb.CodeUnits.SingleOrDefault(c => c.Id == Model);
+}
+
+@if (dbCodeUnit != null)
+{
+    var canUserSave = ValidationModel.CanUserEditOrSaveProject(dbCodeUnit.Id);
+    var readonlyText = canUserSave ? "" : "readonly='readonly'";
+    var isDisabled = canUserSave ? "" : "disabled='disabled'";
+    
+    var url = String.Format("{0}/{1}/{2}/{3}", Request.Url.GetLeftPart(UriPartial.Authority), UrlMap.CodeUnitUrlPrefix, dbCodeUnit.AutoId, dbCodeUnit.VersionId);
+    var user = dotCodeDb.Users.SingleOrDefault(u => u.UserId == dbCodeUnit.UserId);
+    var language = dotCodeDb.Languages.SingleOrDefault(l => l.Id == dbCodeUnit.LanguageId);
+    <div>
+        <table id="info-summary" class="table table-hover">
+            <tr>
+                <td>Created by</td>
+                <td>
+                    @if (user == null)
+                    {
+                        @("anonymous")
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("UserDetails", "Home", new { username = user.Username })">@user.Username</a>   
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>Created on</td><td>@dbCodeUnit.CreatedOn</td>
+            </tr>
+            <tr>
+                <td>Modified on</td><td>@dbCodeUnit.ModifiedOn</td>
+            </tr>
+            <tr>
+                <td>Language</td><td>@(language == null ? "-" : language.Description)</td>
+            </tr>
+            <tr>
+                <td>Url</td><td><a href="@url" target="_blank">@url</a></td>
+            </tr>
+            <tr>
+                <td>Public</td><td><input id="chk-project-visibility" @isDisabled type="checkbox" @(dbCodeUnit.IsPublic ? "checked='checked'" : "")/></td>
+            </tr>
+    
+        </table>
+        <table class="table table-hover">
+            <thead><tr><td>description</td></tr></thead>
+            <tr>
+                <td>
+                    <div>
+                        <textarea id="input-description" style="width: 95%; overflow-y: auto; overflow-x: hidden; resize: none;" rows="7" @readonlyText>@dbCodeUnit.Description</textarea>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

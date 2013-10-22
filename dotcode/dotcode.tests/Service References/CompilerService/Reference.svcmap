@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="097439a9-0fc5-43f2-8f4b-00ce147288a3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50087/CompilerService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CompilerService.xsd" MetadataType="Schema" ID="466eea8e-5432-4220-9519-e301edab94be" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CompilerService1.xsd" MetadataType="Schema" ID="9bb34c10-9f72-494d-90f0-b18c924c9ba0" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CompilerService2.xsd" MetadataType="Schema" ID="3c7c9c5f-502e-45c5-b01d-32997b25b3eb" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CompilerService3.xsd" MetadataType="Schema" ID="841d50ec-061f-43a3-9c0c-f7c4a1bea94c" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CompilerService4.xsd" MetadataType="Schema" ID="a3503f9e-9abf-49e9-846f-67e25950e10f" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CompilerService.disco" MetadataType="Disco" ID="9766a85f-9571-45c2-8353-e47702f326da" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?disco" />
+    <MetadataFile FileName="CompilerService.wsdl" MetadataType="Wsdl" ID="b9f19a36-f467-4915-8f07-75c8a29d0f84" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?wsdl" />
+    <MetadataFile FileName="CompilerService5.xsd" MetadataType="Schema" ID="f203fefc-d4c7-4011-9bb9-8a0df43e133d" SourceId="1" SourceUrl="http://localhost:50087/CompilerService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

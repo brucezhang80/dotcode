@@ -1,0 +1,61 @@
+﻿@model string
+<style type="text/css">.message {
+     color: green;
+ }</style>
+
+<h2>register</h2>
+
+<label for="username">username</label>
+<input type="text" name="username" id="regusername" value='@Request["username"]' />
+<label for="username">email</label>
+<input type="text" name="email" id="email" value="" />
+<label for="password">password</label>
+<input type="password" name="password" id="regpassword" value="" />
+<label for="confirmPassword">confirm password</label>
+<input type="password" name="confirmPassword" id="confirmPassword" value="" />
+
+<a class="btn btn-primary" id="register-action">register</a>
+    
+<p>
+    <span id="register-error" class="error-message"></span>
+    <span id="register-success" class="message"></span>
+</p>
+
+
+<script>
+    function register() {
+        $('#register-error').val('');
+
+        var username = $("#regusername").val();
+        var password = $("#regpassword").val();
+        var confirmPass = $("#confirmPassword").val();
+        var email = $("#email").val();
+        
+        if (confirmPass != password) {
+            $("#register-error").text("* Passwords do not match.");
+            return;
+        }
+
+        $("input[type='password']").val('');
+
+        $.ajax({
+            url: '/api' + '@Url.Action("Register", "Account")',
+            type: "POST",
+            data: { username: username, password: password, email: email },
+            success: function(response) {
+                if (response.Success) {
+                    $('#register-success').text(response.Message);
+                } else {
+                    $("#register-error").text(response.Message);
+                }
+            }
+        });
+    }
+
+    $("#register-action").click(register);
+
+    onEnter('#regusername', register);
+    onEnter('#regpassword', register);
+    onEnter('#confirmPassword', register);
+    onEnter('#email', register);
+</script>   

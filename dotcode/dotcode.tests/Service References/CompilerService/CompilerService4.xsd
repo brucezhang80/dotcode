@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/dotcode.lib.common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/dotcode.lib.common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:50087/CompilerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="CompilerInput">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodeUnit" nillable="true" type="tns:CodeUnit" />
+      <xs:element minOccurs="0" name="References" nillable="true" type="tns:ArrayOfBinaryReference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompilerInput" nillable="true" type="tns:CompilerInput" />
+  <xs:complexType name="CodeUnit">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Language" nillable="true" type="tns:Language" />
+      <xs:element minOccurs="0" name="LastEdit" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CodeUnit" nillable="true" type="tns:CodeUnit" />
+  <xs:complexType name="Language">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Language" nillable="true" type="tns:Language" />
+  <xs:complexType name="ArrayOfBinaryReference">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BinaryReference" nillable="true" type="tns:BinaryReference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBinaryReference" nillable="true" type="tns:ArrayOfBinaryReference" />
+  <xs:complexType name="BinaryReference">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Hash" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="RawBinary" nillable="true" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BinaryReference" nillable="true" type="tns:BinaryReference" />
+</xs:schema>

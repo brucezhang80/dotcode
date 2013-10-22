@@ -1,0 +1,33 @@
+﻿@using JitJotData
+@using dotcode.Models
+@model ClientModel
+
+<table class="table table-hover bootstrap-plain-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>File</th>
+            <th>.NET Version</th>
+        </tr>
+    </thead>
+    @{
+        
+        var db = new dotcodedbEntities();
+        var tempIds = Model.References ?? new List<Guid>();
+        var references = db.Binaries
+            .Where(d => tempIds.Contains(d.Id) && d.Type == (int) ReferenceType.User)
+            .OrderBy(d => d.Type)
+            .ToList();
+
+        foreach (var reference in references)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" data-ref-id="@reference.Id" checked="checked"/>
+                </td>
+                <td>@reference.FileName</td>
+                <td>@reference.RuntimeVersion</td>
+            </tr>
+        }
+    }
+</table>

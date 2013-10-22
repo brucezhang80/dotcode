@@ -1,0 +1,60 @@
+﻿@using dotcode.Extensions
+@using dotcode.Models
+@model Tuple<Guid, IEnumerable<JitJotData.Binary>>
+
+<div>
+    <div>
+        <h3>
+            system references <a id="addSysRef" href="javascript:void(0)"><i class="icon-edit action-link"></i> edit</a>
+        </h3>
+        
+        <table class="table table-hover bootstrap-plain-table">
+            <thead>
+                <tr>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                    <th>File</th>
+                    <th>.NET Version</th>
+                </tr>
+            </thead>
+            @{
+                foreach (var reference in Model.Item2)
+                {
+                    <tr>
+                        <td>
+                            @if (reference.Type == (int)ReferenceType.User)
+                            {
+                                @:[C]
+                            }
+
+                            else
+                            {
+                                @:&nbsp;
+                            }
+                        </td>
+                        <td>@reference.FileName</td>
+                        <td>@reference.RuntimeVersion</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<div id="tmp">@Model.Item2.Select(b => b.Id).ToJsonString()</div>
+
+<script>
+    window.clientModel.References = window.getJsonObject('tmp');
+    
+    $('#addSysRef').click(function () {
+        $.ajax({
+            url: '@Url.Action("EditReferences", "Reference")',
+            data: { id: window.clientModel.Id, References: window.clientModel.References },
+            method: "POST",
+            traditional: true,
+            type: "JSON",
+            success: function(response) {
+                $('#reference-popup').html(response).modal('show');
+            }
+        });
+    });
+</script>

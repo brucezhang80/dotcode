@@ -1,0 +1,30 @@
+﻿<style>
+    #forgot-password {
+        bottom: 0;
+    }
+</style>
+
+@if (WebSecurity.IsAuthenticated)
+{
+    var logoutUrl = "/api" + @Url.Action("logout", "account");
+    <p>
+        You are currently logged in as @WebSecurity.CurrentUserName.
+        <a href="@logoutUrl">log out</a>
+    </p>
+}
+
+else
+{
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                @{ Html.RenderPartial("~/Views/Account/_Login.cshtml"); }
+            </div>
+            <div class="span6">
+                @{ Html.RenderPartial("~/Views/Account/_Register.cshtml"); }        
+            </div>
+        
+            <a id="forgot-password" href="@Url.Action("ResetPassword")" target="_blank">reset password</a>
+        </div>
+    </div>
+}

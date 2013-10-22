@@ -1,0 +1,24 @@
+﻿@using dotcode.Models
+@if(WebSecurity.IsAuthenticated)
+{
+    <a href="@Url.Action("UserDetails", "Home", new {username = WebSecurity.CurrentUserName})" class="username-header">@WebSecurity.CurrentUserName</a> <a id="logout-link" class="header-nav" href="javascript:void(0)">log out</a>
+}
+
+else
+{
+    <a id="login-link" class="not-logged-in" href="javascript:void(0)">log in / register</a>
+}
+
+<script>
+    $('#login-link').click(function () {
+        $('#login-modal').load("@UrlMap.GetLoginUrl(Request.Url.GetLeftPart(UriPartial.Authority), Url.Action("Login"))").modal('show');
+    });
+
+    $('#logout-link').click(function () {
+        $.ajax({
+            url: '@UrlMap.GetLogoutUrl()',
+            success: window.reloadNavBar,
+            error: window.reloadNavBar
+        });
+    });
+</script>

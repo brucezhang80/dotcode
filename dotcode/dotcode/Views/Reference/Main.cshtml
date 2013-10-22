@@ -1,0 +1,39 @@
+﻿@model Guid
+
+<!--
+    Model needs to be user id
+    Then we do lookups on user references, system, and project
+    Display user's references as 3 separate entities.
+    
+    System references
+    Project references
+    Custom dll references
+-->
+<div id="reference-list">
+    
+</div>
+
+<div class="modal fade" style="display: none" id="reference-popup">
+    
+</div>
+
+<script>
+    var isFirstRefPageLoad = true;
+    function refreshReferenceList(clientModel) {
+        $.ajax({
+            url: '@Url.Action("ListReferences", "Reference")',
+            data: { Id: clientModel.Id, References: clientModel.References, LoadSavedReferences: isFirstRefPageLoad },
+            method: "POST",
+            type: "JSON",
+            traditional: true,
+            success: function (response) {
+                isFirstRefPageLoad = false;
+                $('#reference-list').html(response);
+            }
+        });
+    }
+
+    $(function() {
+        refreshReferenceList(window.clientModel);
+    });
+</script>

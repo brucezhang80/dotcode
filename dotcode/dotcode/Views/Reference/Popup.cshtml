@@ -1,0 +1,140 @@
+﻿@using dotcode.Models
+@model ClientModel
+
+<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3>Modify References</h3>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <ul id="addReferences" class="nav nav-pills nav-stacked span2">
+                    <li class="active"><a href="#standard" data-toggle="tab">assemblies</a></li>
+                    <li><a href="#local" data-toggle="tab">browse</a></li>
+                </ul>
+            </div>
+            <div class="span9">
+                <div class="tab-content" style="bottom: 0; padding-left: 25px; top: 0px">
+                    <div class="tab-pane active" id="standard">
+                        <table class="table table-hover bootstrap-plain-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Library</th>
+                                    <th>.NET Version</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var commonProjectRefs = Model.References;
+                                    foreach (var reference in ReferenceModel.GetCommonReferences())
+                                    {
+                                    <tr>
+                                        <td>
+                                            @{
+                                        var hasreference = commonProjectRefs.Contains(reference.Id);
+                                        var checkedstr = !hasreference ? "" : "checked=\"checked\"";
+                                            }
+                                            <input type="checkbox" data-ref-id="@reference.Id" @Html.Raw(checkedstr)/>
+                                        </td>
+                                        <td>
+                                            @reference.FileName
+                                        </td>
+                                        <td>@reference.RuntimeVersion</td>
+                                    </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="local">
+                        @using (Html.BeginForm("UploadCustomProjectReference", "Reference",
+                                   new ClientModel { Id = Model.Id, References = Model.References },
+                                   FormMethod.Post,
+                                   new { enctype = "multipart/form-data", target = "NullUploadFrame", id = "upload_form" }))
+                        {
+                            <h5>Upload .NET Library</h5>
+                            <div>
+                                <input type="file" multiple="multiple" name="files" id="file1" />
+                                <input type="button" style="height: 30px" onclick="UploadReference();" value="Upload" />
+                            </div>
+                        }
+
+                        <div id="custom-ref-partial">
+                            @{ Html.RenderPartial("_CustomReferencePartial", Model); }
+                        </div>
+
+                        <iframe id="NullUploadFrame" name="NullUploadFrame" onload="UploadComplete();" style="position: absolute; left: -999em; top: -999em;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" style="position: absolute; bottom: 0; left: 0; right: 0;">
+    <a href="javascript:void(0)" class="btn" data-dismiss="modal">Cancel</a>
+    <a href="javascript:void(0)" id="saveReferences" class="btn btn-primary">OK</a>
+</div>
+
+<script>
+
+    var uploadFirstLoad = true;
+    function UploadComplete() {
+        if (uploadFirstLoad) {
+            uploadFirstLoad = false;
+            return;
+        }
+
+        var newIds = JSON.parse($("#NullUploadFrame").contents().find('body').text());
+        var oldIds = window.clientModel.References;
+        var ids = $.merge(oldIds, newIds);
+
+        document.getElementById("upload_form").reset();
+
+        $.ajax({
+            url: '@Url.Action("ListCustomReferencesPartial", "Reference")',
+            data: { codeUnitId: '@Model', References: ids },
+            method: "POST",
+            type: "JSON",
+            traditional: true,
+            success: function (response) {
+                $('#custom-ref-partial').html(response);
+            }
+        });
+    }
+
+    function UploadReference() {
+        $("#upload_form").submit();
+    }
+
+    $("#upload_form").attr('target', 'NullUploadFrame');
+
+    $('#saveReferences').click(function () {
+        // Go through all tabs and add selected
+        var activeclass = 'active';
+
+        if ($('#standard').hasClass(activeclass)) {
+        }
+
+        if ($('#projects').hasClass(activeclass)) {
+        }
+
+        if ($('#local').hasClass(activeclass)) {
+        }
+
+        var selectedReferences = [];
+        $('#standard input:checked').each(function () {
+            selectedReferences.push($(this).data('refId'));
+        });
+
+        $('#custom-ref-partial input:checked').each(function () {
+            selectedReferences.push($(this).data('refId'));
+        });
+
+        window.clientModel.References = selectedReferences;
+        window.refreshReferenceList(window.clientModel);
+        $('#reference-popup').modal('hide');
+    });
+</script>

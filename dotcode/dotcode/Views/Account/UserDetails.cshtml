@@ -1,0 +1,78 @@
+﻿@using System.Data.Entity
+@using JitJotData
+@using dotcode.Models
+@model JitJotData.User
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model == null)
+{
+    <h2>Could not find user with that username</h2>
+}
+
+else
+{
+    ViewBag.Title = Model.Username;
+
+    <h2>@Model.Username</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>Language</td>
+                <td>Last Modified</td>
+                <td>Id</td>
+                <td>Version</td>
+                <td>Description</td>
+                <td>Source</td>
+            </tr>
+        </thead>
+        @{
+            var showPrivate = WebSecurity.CurrentUserId == Model.UserId;
+            var dotCodeDb = new dotcodedbEntities();
+            var codeUnits = dotCodeDb
+                .CodeUnits
+                .Where(c => c.UserId == Model.UserId && (c.IsPublic || showPrivate))
+                .GroupBy(c => c.AutoId)
+                    .Select(g => g.OrderByDescending(c => c.VersionId).Take(1))
+                    .SelectMany(c => c)
+                .Include("Language")
+                .OrderByDescending(c => c.ModifiedOn);
+
+            foreach (var codeUnit in codeUnits)
+            {
+                codeUnit.Description = codeUnit.Description ?? "";
+                
+                <tr>
+                    <td>@codeUnit.Language.Description</td>
+                    <td>@codeUnit.ModifiedOn</td>
+                    <td><a href="@UrlMap.ViewCodeUnit(codeUnit.AutoId, codeUnit.VersionId)" target="_blank">@codeUnit.AutoId</a></td>
+                    <td>@codeUnit.VersionId</td>
+                    <td> @( codeUnit.Description.Length == 0 ? "-" : codeUnit.Description.Length > 30 ? codeUnit.Description.Substring(0, 30) : codeUnit.Description)</td>
+                    <td>
+                        @{
+                            var startIndex = codeUnit.Source.IndexOf("class");
+                            if (startIndex == -1)
+                            {
+                                startIndex = 0;
+                            }
+                            
+                            var take = codeUnit.Source.Length < 100 ? codeUnit.Source.Length : 100;
+                            if (startIndex + take > codeUnit.Source.Length)
+                            {
+                                take = codeUnit.Source.Length - (startIndex + 1);
+                            }
+                            
+                        }
+                        @(codeUnit.Source.Substring(startIndex, take))  ...
+                    </td>
+                </tr>
+            }
+        }
+    </table>   
+}
+
+@section Scripts
+{}

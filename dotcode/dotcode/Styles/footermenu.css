@@ -1,0 +1,12 @@
+﻿#code-hover-menu {
+}
+
+.hover-tab-item {
+    color: black;
+    float: left;
+    margin-left: 10px;
+    /*border-bottom: 3px;
+    border-bottom-color: black;
+    border-bottom-style: solid;*/
+    text-decoration: none;
+}

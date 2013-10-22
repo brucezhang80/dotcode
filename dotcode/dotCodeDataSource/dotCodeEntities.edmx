@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DotCodeDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DotCodeDBStoreContainer">
+          <EntitySet Name="CompilerOutput" EntityType="DotCodeDB.Store.CompilerOutput" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DllReferences" EntityType="DotCodeDB.Store.DllReferences" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CompilerOutput_DllReferences" Association="DotCodeDB.Store.FK_CompilerOutput_DllReferences">
+            <End Role="DllReferences" EntitySet="DllReferences" />
+            <End Role="CompilerOutput" EntitySet="CompilerOutput" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CompilerOutput">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="DllReferenceId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DllReferences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FileName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="RawAssembly" Type="image" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CompilerOutput_DllReferences">
+          <End Role="DllReferences" Type="DotCodeDB.Store.DllReferences" Multiplicity="1" />
+          <End Role="CompilerOutput" Type="DotCodeDB.Store.CompilerOutput" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DllReferences">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompilerOutput">
+              <PropertyRef Name="DllReferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DotCodeDB" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="dotcodedbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CompilerOutputs" EntityType="DotCodeDB.CompilerOutput" />
+          <EntitySet Name="DllReferences" EntityType="DotCodeDB.DllReference" />
+          <AssociationSet Name="FK_CompilerOutput_DllReferences" Association="DotCodeDB.FK_CompilerOutput_DllReferences">
+            <End Role="DllReference" EntitySet="DllReferences" />
+            <End Role="CompilerOutput" EntitySet="CompilerOutputs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CompilerOutput">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="DateTime" Name="TimeStamp" Nullable="false" Precision="3" />
+          <Property Type="Guid" Name="DllReferenceId" Nullable="false" />
+          <NavigationProperty Name="DllReference" Relationship="DotCodeDB.FK_CompilerOutput_DllReferences" FromRole="CompilerOutput" ToRole="DllReference" />
+        </EntityType>
+        <EntityType Name="DllReference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Binary" Name="RawAssembly" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="CompilerOutputs" Relationship="DotCodeDB.FK_CompilerOutput_DllReferences" FromRole="DllReference" ToRole="CompilerOutput" />
+        </EntityType>
+        <Association Name="FK_CompilerOutput_DllReferences">
+          <End Type="DotCodeDB.DllReference" Role="DllReference" Multiplicity="1" />
+          <End Type="DotCodeDB.CompilerOutput" Role="CompilerOutput" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DllReference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CompilerOutput">
+              <PropertyRef Name="DllReferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DotCodeDBStoreContainer" CdmEntityContainer="dotcodedbEntities">
+          <EntitySetMapping Name="CompilerOutputs">
+            <EntityTypeMapping TypeName="DotCodeDB.CompilerOutput">
+              <MappingFragment StoreEntitySet="CompilerOutput">
+                <ScalarProperty Name="DllReferenceId" ColumnName="DllReferenceId" />
+                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DllReferences">
+            <EntityTypeMapping TypeName="DotCodeDB.DllReference">
+              <MappingFragment StoreEntitySet="DllReferences">
+                <ScalarProperty Name="RawAssembly" ColumnName="RawAssembly" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

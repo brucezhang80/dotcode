@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/dotcode.lib.common.Sandbox" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/dotcode.lib.common.Sandbox" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:49193/RemoteSandbox.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="SandboxInput">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AssemblyBytes" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="EntryPoint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MainClass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SandboxSetup" nillable="true" type="tns:SandboxSetup" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SandboxInput" nillable="true" type="tns:SandboxInput" />
+  <xs:complexType name="SandboxSetup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AllowNetworking" type="xs:boolean" />
+      <xs:element minOccurs="0" name="AllowPersistentStorage" type="xs:boolean" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CommandLineArgs" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="MemoryLimit" type="xs:long" />
+      <xs:element minOccurs="0" name="OutputLimit" type="xs:long" />
+      <xs:element minOccurs="0" name="TimeLimit" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SandboxSetup" nillable="true" type="tns:SandboxSetup" />
+  <xs:complexType name="SandboxOutput">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExecutionTimeMillisec" type="xs:long" />
+      <xs:element minOccurs="0" name="PeakMemoryUsage" type="xs:long" />
+      <xs:element minOccurs="0" name="Stdout" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SandboxOutput" nillable="true" type="tns:SandboxOutput" />
+</xs:schema>
